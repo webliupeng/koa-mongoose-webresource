@@ -1,16 +1,11 @@
 
 var { CollectionWebResource } = require("../../lib/webresource")
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 
 class Articles extends CollectionWebResource {
-    getModelName() {
-        return 'articles'
-    }
-
+    
     getSchema() {
-        return new Schema({
+        return {
             title:  String,
             author: String,
             body:   String,
@@ -21,7 +16,7 @@ class Articles extends CollectionWebResource {
                 votes: Number,
                 favs:  Number
             }
-        }, {collection: "articles"}); 
+        }
     }
 }
 

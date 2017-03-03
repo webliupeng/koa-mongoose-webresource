@@ -1,0 +1,35 @@
+{
+  "name": "koa-mongoose-webresource",
+  "version": "1.0.0",
+  "description": "koa-mongoose-webresource provides a resource abstract layer for koa to access mongoose models as REST resources",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "dependencies": {
+    "koa-bodyparser": "^4.0.0",
+    "koa": "^2.0.1",
+    "mongoose": "^4.8.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webliupeng/koa-mongoose-webresource.git"
+  },
+  "keywords": [
+    "koa",
+    "rest",
+    "api",
+    "mongoose"
+  ],
+  "author": "liupeng",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/webliupeng/koa-mongoose-webresource/issues"
+  },
+  "homepage": "https://github.com/webliupeng/koa-mongoose-webresource#readme"
+}
