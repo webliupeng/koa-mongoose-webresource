@@ -4,17 +4,24 @@ const app = new Koa();
 
 app.use(bodyParser());
 
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/koa-mongoose-webresource');
 
 const { middleware } = require('../index')
 
+var models = ['articles', 'comments']
+models.forEach((name) => {
+    mongoose.model(name, require(`./models/${name}`).schema)
+})
+
+
 app.use(middleware({
     path: 'api',
+    mongoose,
     resourceClassLoad: (name) => {
-        console.log("this is loader", name, `${__dirname}/webresources/${name}`)
         try {
             return require(`${__dirname}/webresources/${name}`).default
         } catch (ex) {
-            console.log('load excepiton', ex)
             return null
         }
     }
