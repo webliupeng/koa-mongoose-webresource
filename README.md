@@ -1,30 +1,25 @@
 # koa-mongoose-webresource
 koa-mongoose-webresource provides a resource abstract layer for koa to expose mongoose models as REST resources
 
+# Requirements
+
+ - NodeJS v7.4.0+ with --harmony-async-await 
+ - Koa v2.0+
+
 # Install
     npm install koa-mongoose-webresource --save
-    
 # Usage
-    const Koa = require('koa');
-	const bodyParser = require('koa-bodyparser');
-	const app = new Koa();
+You could extend`CollectionWebResource` or `WebResource` base-webresource class to define your web-resource .
 
-	const mongoose = require('mongoose');
-	mongoose.connect('mongodb://localhost/koa-mongoose-webresource');
-    var { middleware, CollectionWebResource } = require('koa-mongoose-webresource')
-    
-    var schema = new mongoose.Schema({
-        title:  String,
-        author: String,
-        body:   String
-    })
-    
-    class Posts extends CollectionWebResource {
-    }
-    
-    mongoose.model('posts', schema)
-    
-    app.use(bodyParser());
+	var { CollectionWebResource } = require('koa-mongoose-webresource')
+	class Posts extends CollectionWebResource {
+		
+	}
+	
+In the koa entrance.You just need to require the module `koa-mongoose-webresources` and enable the middle-wear `app.use(middleware({...}))` and implements resource class loader. as below code
+
+    var middleware = require('koa-mongoose-webresource').middleware
+   
     app.use(middleware({
         path: 'api',
         mongoose,
@@ -32,10 +27,14 @@ koa-mongoose-webresource provides a resource abstract layer for koa to expose mo
             return Posts
         }
     }))
-    app.listen(3000)
 
-
+ 
 ----------
+When koa started, It will create these default mappings.
 
+	GET     /posts           ->  list
+	GET     /posts/:id       ->  detail
+	POST    /posts           ->  create
+	PUT     /posts/:id       ->  update
+	DELETE  /posts/:id       ->  destroy
 
-	curl http://localhost:3000/api/posts

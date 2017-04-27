@@ -5,6 +5,7 @@ const app = new Koa();
 app.use(bodyParser());
 
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/koa-mongoose-webresource');
 
 const { middleware } = require('../index')

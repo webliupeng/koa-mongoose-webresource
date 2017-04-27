@@ -13,7 +13,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "",
+    "start": "node --harmony-async-await examples/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
