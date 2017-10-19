@@ -7,6 +7,8 @@ koa-mongoose-webresource provides a resource abstract layer for koa to expose mo
  - Koa v2.0+
 
 # Install
+`koa-mongoose-webresource` require koa v2.0+ ,node v7.4.0 or higher and async function support.
+
     npm install koa-mongoose-webresource --save
 # Usage
 You could extend`CollectionWebResource` or `WebResource` base-webresource class to define your web-resource .
