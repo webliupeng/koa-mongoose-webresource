@@ -2,6 +2,10 @@ var { WebResource, CollectionWebResource } = require("./lib/webresource")
 let middleware = function(options) {
     return (
         async (ctx, next) => {
+
+            if (!ctx) {
+                console.log("context is undefined")
+            }
             var path = ctx.path
             if (options.path) {
                 if (ctx.path.indexOf(options.path) == -1) {
@@ -21,28 +25,58 @@ let middleware = function(options) {
             
             try {
                 var wr = await webresource.firstRespondResource()
-                wr.filterEnabled = true
+
+                var setBody = (body) => {
+                    if (body) {
+                        var arr = body
+                        
+                        var filter = (i) => { 
+                            var o = i.toObject ? i.toObject() : i
+                            var ifs = wr instanceof CollectionWebResource ? wr.invisableFieldsInCollections : wr.invisableFields
+                            ifs.forEach((field)=> {
+                                delete o[field]
+                            })
+                            return o
+                        }
+
+                        if (body instanceof Array) {
+                            ctx.body = arr.map(filter)
+                        } else {
+                            ctx.body = filter(body)
+                        }
+                        
+                    } else {
+                        ctx.body = body
+                    }
+                }
+
                 switch (ctx.method.toLowerCase()) {
                     case "get":
                         await wr.beforeRead()
-                        ctx.body = await wr.read();
-                        break;
+                        setBody(wr.afterRead(await wr.read()))
+                        break
                     case "put":
                         await wr.beforeUpdate(ctx.request.body)
-                        ctx.body = await wr.update(ctx.request.body);
+                        setBody(wr.afterUpdate(await wr.update(ctx.request.body)))
                         break;
                     case "delete":
                         await wr.beforeDelete()
-                        ctx.body = await wr.delete();
+                        setBody(wr.afterDelete(await wr.delete()))
                         break;
                     case "post":
                         await wr.beforeCreate(ctx.request.body)
-                        ctx.body = await wr.create(ctx.request.body)
+                        setBody(wr.afterCreate(await wr.create(ctx.request.body)))
                         break;
                 }
             } catch (error) {
                 console.log(error, error.stack)
-                next(error)
+
+                if (process.env.NODE_ENV == "development") {
+                    ctx.body = error.toString()
+                } else {
+                    ctx.body = "error occured"
+                }
+                
             }
         }
     )

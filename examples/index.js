@@ -6,7 +6,7 @@ app.use(bodyParser());
 
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/koa-mongoose-webresource');
+mongoose.connect('mongodb://localhost:27017/koa-mongoose-webresource');
 
 const { middleware } = require('../index')
 
@@ -27,4 +27,4 @@ app.use(middleware({
         }
     }
 }))
-app.listen(3000)
+app.listen(3330)

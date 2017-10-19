@@ -11,10 +11,12 @@
     "koa": "^2.0.1",
     "mongoose": "^4.8.5"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "ava": "^0.19.1"
+  },
   "scripts": {
     "start": "node --harmony-async-await examples/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava -- --harmony-async-await"
   },
   "repository": {
     "type": "git",
