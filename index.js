@@ -69,14 +69,7 @@ let middleware = function(options) {
                         break;
                 }
             } catch (error) {
-                console.log(error, error.stack)
-
-                if (process.env.NODE_ENV == "development") {
-                    ctx.body = error.toString()
-                } else {
-                    ctx.body = "error occured"
-                }
-                
+                throw error
             }
         }
     )
